@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vue Todo List</title>
+    <style>
+      .completed {
+        text-decoration: line-through;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <h1>TODO LIST</h1>
+      <form v-on:submit.prevent="createTodo(newInput)">
+        <input type="text" v-model="newInput" />
+        <button>추가</button>
+      </form>
+
+      <ul>
+        <li
+          v-for="todo in todos"
+          v-bind:class="{ completed: todo.isCompleted }"
+        >
+          <input type="checkbox" v-model="todo.isCompleted" />
+          {{todo.content}}
+        </li>
+      </ul>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+      new Vue({
+        el: "#app",
+        methods: {
+          createTodo() {
+            this.todos.push({ content: this.newInput, isCompleted: false });
+            this.newInput = "";
+          },
+        },
+        data: {
+          name: "Minha Koo",
+          newInput: "",
+          todos: [
+            { content: "Vue.js 복습", isCompleted: false },
+            { content: "JavaScript 복습", isCompleted: true },
+            { content: "코딩 테스트 준비", isCompleted: false },
+            { content: "CJ 자소서 쓰기", isCompleted: false },
+          ],
+        },
+      });
+    </script>
+  </body>
+</html>

@@ -3,9 +3,37 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Vue Intro</title>
   </head>
   <body>
-    Vue
+    <!-- <div id="app">
+      {{ name }}
+      <input type="text" v-model="inputText" />
+      <p>{{ inputText }}</p>
+    </div> -->
+
+    <div id="app-vanilla"></div>
+    <p id="name"></p>
+    <input
+      type="text"
+      class="inputText"
+      oninput="inputP.innerHTML = inputValue.value"
+    />
+    <p id="inputText"></p>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script>
+      // const app = new Vue({
+      //   el: "#app", // 어디에 올라갈지
+      //   data: {
+      //     name: "Minha Koo",
+      //     inputText: "",
+      //   },
+      // });
+      const nameP = document.getElementById("name");
+      nameP.innerHTML = "Minha Koo";
+      const inputP = document.getElementById("inputText");
+      const inputValue = document.querySelector(".inputText");
+    </script>
   </body>
 </html>
