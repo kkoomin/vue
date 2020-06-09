@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jdenticon 생성기</title>
+    <style>
+      input {
+        display: inline-block;
+        padding: 0 0.2rem;
+      }
+      svg {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="app">
+      <h1>Jdenticon 생성기</h1>
+      Input:
+      <input
+        type="text"
+        v-model="word"
+        placeholder="입력해보삼 🖍"
+        v-on:input="renderJdenticon()"
+      />
+      <section>
+        Output:
+        <svg v-bind:data-jdenticon-value="word" width="200" height="200">
+          Fallback text or image for browsers not supporting inline svg.
+        </svg>
+      </section>
+    </main>
+
+    <!-- script -->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jdenticon@2.2.0" async></script>
+    <script>
+      new Vue({
+        el: "#app",
+        data: {
+          word: "",
+        },
+        methods: {
+          renderJdenticon() {
+            jdenticon();
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

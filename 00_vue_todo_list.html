@@ -13,20 +13,34 @@
   <body>
     <div id="app">
       <h1>TODO LIST</h1>
-      <form v-on:submit.prevent="createTodo(newInput)">
-        <input type="text" v-model="newInput" />
+
+      <form v-on:submit.prevent="todosByStatus">
+        <input v-model="searchKeyword" type="text" placeholder="🔍 검색하기" />
+      </form>
+
+      <br />
+      <br />
+      <select name="" id="" v-model="status">
+        <option value="showAll">모두보기</option>
+        <option value="showCompleted">완료된 것만 보기</option>
+        <option value="showIncomplete">미완료된 것만 보기</option>
+      </select>
+
+      <form v-on:submit.prevent="createTodo">
+        <input type="text" v-model="newInput" placeholder="할 일 입력하기 ✏️" />
         <button>추가</button>
       </form>
 
       <ul>
         <li
-          v-for="todo in todos"
+          v-for="todo in todosByStatus"
           v-bind:class="{ completed: todo.isCompleted }"
         >
           <input type="checkbox" v-model="todo.isCompleted" />
           {{todo.content}}
         </li>
       </ul>
+      <button v-on:click="removeCompletes">완료된 할 일 지우기</button>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
@@ -35,12 +49,45 @@
         el: "#app",
         methods: {
           createTodo() {
-            this.todos.push({ content: this.newInput, isCompleted: false });
+            if (this.newInput) {
+              this.todos.push({ content: this.newInput, isCompleted: false });
+            } else {
+              alert("할 게 업는 거 가튼디ㅇㅅㅇ");
+            }
             this.newInput = "";
+          },
+          removeCompletes() {
+            this.todos = this.todos.filter(
+              // (todo) => todo.isCompleted === false
+              (todo) => !todo.isCompleted
+            );
+          },
+          handleKeywordInput() {
+            return this.todos.filter((todo) => {
+              return todo.content.includes(this.searchKeyword);
+            });
+          },
+        },
+        computed: {
+          computedData() {
+            return new Date();
+          },
+          todosByStatus() {
+            if (this.searchKeyword) return this.handleKeywordInput();
+            switch (this.status) {
+              case "showCompleted":
+                return this.todos.filter((todo) => !todo.isCompleted);
+              case "showIncomplete":
+                return this.todos.filter((todo) => todo.isCompleted);
+              default:
+                return this.todos;
+            }
           },
         },
         data: {
           name: "Minha Koo",
+          status: "showAll", // showAll, showCompleted, showIncomplete
+          searchKeyword: "",
           newInput: "",
           todos: [
             { content: "Vue.js 복습", isCompleted: false },
